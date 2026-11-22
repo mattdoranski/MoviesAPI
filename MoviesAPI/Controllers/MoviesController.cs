@@ -53,7 +53,7 @@ namespace MoviesAPI.Controllers
                 INNER JOIN Genre g ON m.GenreId = g.Id
                 INNER JOIN AudienceRating r ON m.AudienceRatingId = r.Id
                 INNER JOIN Director d ON m.DirectorId = d.Id
-                LEFT OUTER JOIN CriticReview c ON m.Id = c.MovieId
+                LEFT OUTER JOIN CriticReview c ON m.Id = c.MovieId AND c.IsPublished = 1
                 LEFT OUTER JOIN UserSnapshot u ON u.UserId = c.CreatedBy
                 WHERE m.Id = @Id";
 
@@ -73,7 +73,7 @@ namespace MoviesAPI.Controllers
                         movie.CriticReviews = new List<CriticReview>();
                         
                     }
-                    if (r != null)
+                    if (c != null)
                     {
                         c.User = u;
                         movie.CriticReviews.Add(c);
@@ -82,7 +82,7 @@ namespace MoviesAPI.Controllers
                     return movie;
                 },
                 new {Id = id}, //Assign @Id in SQL
-                splitOn: "Id,Id,UserId" // specify what column to split on (Id is the default)
+                splitOn: "Id,Id,Id,Id,UserId" // specify what column to split on (Id is the default)
                 );
 
             return Ok(movie);
