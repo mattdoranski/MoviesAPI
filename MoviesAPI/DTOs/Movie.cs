@@ -19,5 +19,14 @@
         public int AudienceRatingId { get; set; }
 
         public int DirectorId { get; set; }
+
+        public Genre Genre { get; set; } = null;
+
+        public AudienceRating AudienceRating { get; set; } = null;
+
+        public Director Director { get; set; } = null;
+
+        public List<CriticReview> CriticReviews { get; set; } = null;
+
     }
 }
